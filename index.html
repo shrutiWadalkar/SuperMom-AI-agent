@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuperMom AI Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .chat-container {
+            width: 80%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: row;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .input-section, .output-section {
+            width: 50%;
+            padding: 20px;
+        }
+        .input-section {
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .output-section {
+            background: #ffebcd;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        h1 {
+            color: orange;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        textarea {
+            width: 90%;
+            height: 100px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: none;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: orange;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: darkorange;
+        }
+        .response-box {
+            width: 90%;
+            padding: 15px;
+            background: #ffffff;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-container">
+        <!-- Left Side: Input -->
+        <div class="input-section">
+            <h1>SuperMom AI Chatbot</h1>
+            <textarea id="userInput" placeholder="Type your question here..."></textarea>
+            <button onclick="sendMessage()">Ask</button>
+        </div>
+
+        <!-- Right Side: Output -->
+        <div class="output-section">
+            <div id="responseBox" class="response-box">Your response will appear here...</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("userInput").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const userInput = document.getElementById("userInput").value;
+            if (!userInput.trim()) return;
+
+            fetch("/ask", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question: userInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("responseBox").innerText = data.response;
+                document.getElementById("userInput").value = ""; // Clear input after sending
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    </script>
+
+</body>
+</html>
