@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import requests
 import re
+from urllib.parse import quote as url_quote
+
 
 # Load environment variables from .env file
 load_dotenv()
