@@ -1,3 +1,19 @@
+import numpy as np
+import matplotlib
+import pandas as pd
+import seaborn as sns
+import sklearn
+import scipy
+
+# Check and print versions of installed packages
+print(f"numpy version: {np.__version__}")  # Should print 1.23.5
+print(f"matplotlib version: {matplotlib.__version__}")
+print(f"pandas version: {pd.__version__}")
+print(f"seaborn version: {sns.__version__}")
+print(f"scikit-learn version: {sklearn.__version__}")
+print(f"scipy version: {scipy.__version__}")
+
+# Your AI agent logic below
 from flask import Flask, request, jsonify, render_template
 import os
 from dotenv import load_dotenv
@@ -65,3 +81,6 @@ def ask():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=5000)
+
+
+
